@@ -3,8 +3,11 @@ import Filter from './Filter';
 import questionsData from './data/QuestionsData'; // Assuming you have questionsData file with your questions
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import QuestionComponent from './QuestionComponent';
+
 const QuestionsPage = () => {
-  const [filteredQuestions, setFilteredQuestions] = useState(questionsData);
+  // const [filteredQuestions, setFilteredQuestions] = useState(questionsData);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
 
   const navigate = useNavigate();
 
@@ -38,7 +41,12 @@ const QuestionsPage = () => {
       filteredData = filteredData.filter(question => question.questionType === filters.questionType);
     }
 
-    setFilteredQuestions(filteredData);
+    // setFilteredQuestions(filteredData);
+    if (filteredData.length === questionsData.length) {
+      setFilteredQuestions([]);
+    } else {
+      setFilteredQuestions(filteredData);
+    }
   };
 
   return (
@@ -49,7 +57,7 @@ const QuestionsPage = () => {
       <div>
         <h2>Filtered Questions</h2>
         <ol>
-          {filteredQuestions.map(question => (
+          {/* {filteredQuestions.map(question => (
             <li key={question.id}>
               <h3>{question.question}</h3>
               <p>Subject: {question.subject}</p>
@@ -59,7 +67,16 @@ const QuestionsPage = () => {
               <button onClick={() => handleEdit(question)}>Edit</button>
               <button onClick={() => handleDelete(question.id)}>Delete</button>
             </li>
-          ))}
+          ))} */}
+          {filteredQuestions.length === 0 ? (
+            <p>No questions found</p>
+          ) : (
+            <ol>
+              {filteredQuestions.map(question => (
+                <QuestionComponent key={question.id} question={question} onEdit={handleEdit} onDelete={handleDelete} />
+              ))}
+            </ol>
+          )}
         </ol>
       </div>
     </div>

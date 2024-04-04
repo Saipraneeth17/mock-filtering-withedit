@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const subjects = ['Java', 'Python', 'DevOps'];
 const subTopics = {
-  Java: ['Basics', 'Object-Oriented Programming', 'Exceptions'],
+  Java: ['Basics', 'Object-Oriented Programming', 'Exception Handling'],
   Python: ['Control Flow', 'Functions', 'Lists'],
   DevOps: ['Docker Basics', 'Continuous Integration', 'Container Orchestration']
 };
@@ -37,15 +37,29 @@ const Filter = ({ onFilter }) => {
         </select>
       </label>
 
-      <label>
+      {/* <label>
         Sub-Topic:
-        <select value={selectedSubTopic} onChange={(e) => setSelectedSubTopic(e.target.value)}>
+        <select
+          value={selectedSubject ? selectedSubTopic : ""}
+          onChange={(e) => setSelectedSubTopic(e.target.value)}
+        >
           <option value="">Select Sub-Topic</option>
           {selectedSubject && subTopics[selectedSubject].map(topic => (
             <option key={topic} value={topic}>{topic}</option>
           ))}
         </select>
-      </label>
+      </label> */}
+      {selectedSubject && (
+        <label>
+          Sub-Topic:
+          <select value={selectedSubTopic} onChange={(e) => setSelectedSubTopic(e.target.value)}>
+            <option value="">Select Sub-Topic</option>
+            {selectedSubject && subTopics[selectedSubject].map(topic => (
+              <option key={topic} value={topic}>{topic}</option>
+            ))}
+          </select>
+        </label>
+      )}
 
       <label>
         Difficulty:
